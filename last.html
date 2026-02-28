@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nos beaux souvenirs ensemble</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@300;400;500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg,
+                    #1a1a2e 0%,
+                    #16213e 50%,
+                    #0f3460 100%);
+            background-size: 400% 400%;
+            animation: gradientFlow 15s ease infinite;
+            font-family: 'Quicksand', sans-serif;
+            overflow-x: hidden;
+            color: #ffffff;
+        }
+
+        /* Cursor */
+        .custom-cursor {
+            width: 25px;
+            height: 25px;
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            mix-blend-mode: difference;
+            transition: transform 0.1s;
+        }
+
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Enhanced Sparkle Effect */
+        .magic-sparkles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #fff, #e94560);
+            animation: twinkle var(--duration, 4s) ease-in-out infinite;
+            opacity: 0;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 0.9; transform: scale(1.2); }
+        }
+
+        /* Floating elements */
+        .floating-elements {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .float-item {
+            position: absolute;
+            font-size: 1.5rem;
+            animation: floatItem var(--float-duration, 6s) ease-in-out infinite;
+            animation-delay: var(--delay, 0s);
+        }
+
+        @keyframes floatItem {
+            0% {
+                transform: translate(0, 100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            100% {
+                transform: translate(var(--translate-x, 0), -100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Welcome Section */
+        .welcome {
+            text-align: center;
+            padding: 4rem 2rem;
+            position: relative;
+            z-index: 3;
+        }
+
+        .welcome h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            background: linear-gradient(135deg, #e94560, #ff9a8b, #ffc3a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInScale 2s ease;
+            text-shadow: 0 0 30px rgba(233, 69, 96, 0.5);
+        }
+
+        .welcome p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 1.5rem auto;
+            line-height: 1.8;
+            color: #d4a5ff;
+            animation: fadeIn 2s ease 0.5s both;
+        }
+
+        /* Enhanced Memory Cards */
+        .memory-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            z-index: 3;
+            position: relative;
+        }
+
+        .memory-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 25px;
+            padding: 1.5rem;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(233, 69, 96, 0.2);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .memory-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 0 0 50px rgba(233, 69, 96, 0.4);
+            border-color: rgba(233, 69, 96, 0.5);
+        }
+
+        .memory-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: 0.5s;
+        }
+
+        .memory-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .memory-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 18px;
+            margin-bottom: 1rem;
+            transition: transform 0.5s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .memory-card:hover .memory-img {
+            transform: scale(1.08);
+        }
+
+        .memory-date {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #e94560, #ff9a8b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .memory-caption {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        /* Final Message Section */
+        .final-message {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(233, 69, 96, 0.1) 0%, rgba(155, 109, 255, 0.1) 100%);
+            backdrop-filter: blur(10px);
+            margin-top: 3rem;
+            position: relative;
+            z-index: 3;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .final-message h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, #e94560, #ff9a8b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2rem;
+            animation: heartbeat 2s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        .final-message p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 1.5rem;
+            line-height: 1.9;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .goodbye-btn {
+            display: inline-block;
+            padding: 1.2rem 2.5rem;
+            font-size: 1.3rem;
+            background: linear-gradient(135deg, #e94560, #ff6b6b, #ff9a8b);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.5);
+            animation: float 3s infinite ease-in-out;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .goodbye-btn:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 15px 50px rgba(233, 69, 96, 0.7);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        /* Animations */
+        @keyframes fadeInScale {
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 12px; }
+        ::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.1); }
+        ::-webkit-scrollbar-thumb { 
+            background: linear-gradient(45deg, #e94560, #ff6b6b); 
+            border-radius: 6px; 
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .welcome h1 { font-size: 2.8rem; }
+            .memory-container { grid-template-columns: 1fr; }
+            .final-message h2 { font-size: 2.5rem; }
+            .welcome p, .final-message p { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="custom-cursor"></div>
+    <div class="magic-sparkles"></div>
+    <div class="floating-elements">
+        <div class="float-item" style="--float-duration: 6s; --delay: 0s; --translate-x: 20px;">*</div>
+        <div class="float-item" style="--float-duration: 8s; --delay: 1s; --translate-x: -30px;">+</div>
+        <div class="float-item" style="--float-duration: 7s; --delay: 2s; --translate-x: 40px;">x</div>
+        <div class="float-item" style="--float-duration: 9s; --delay: 3s; --translate-x: -20px;">o</div>
+        <div class="float-item" style="--float-duration: 5s; --delay: 4s; --translate-x: 30px;">*</div>
+    </div>
+
+    <section class="welcome">
+        <h1>Nos Moments Precieux Ensemble</h1>
+        <p>Chaque instant passe avec toi est un tresor que je garde Precieusement dans mon coeur.<br>Ces souvenirs sont les plus precieux de ma vie.</p>
+    </section>
+
+    <div class="memory-container">
+        <div class="memory-card">
+            <img src="./d1.jpg" alt="Ton beau sourire" class="memory-img">
+            <div class="memory-date">Ton Sourire Eblouissant</div>
+            <div class="memory-caption">Tu as le plus beau sourire du monde. Quand tu ris, tout devient plus lumineux. Je suis si chanceuse de pouvoir l'admirer chaque jour.</div>
+        </div>
+        <div class="memory-card">
+            <img src="./d2.jpg" alt="Nos moments ensemble" class="memory-img">
+            <div class="memory-date">Ensemble, on est invincible</div>
+            <div class="memory-caption">Chaque moment avec toi est une benediction. Ta presence apporte tant de joie dans ma vie. Tu es mon rayon de soleil!</div>
+        </div>
+        <div class="memory-card">
+            <img src="./d3.jpg" alt="Ton ame pure" class="memory-img">
+            <div class="memory-date">Ton Ame Belle et Pure</div>
+            <div class="memory-caption">Tu as un coeur en or. Ta gentillesse et ta Douceur illuminent la vie de tous ceux qui t'entourent. Garde toujours cette lumiere en toi!</div>
+        </div>
+    </div>
+
+    <section class="final-message">
+        <h2>Merci pour tous ces beaux moments</h2>
+        <p>Chaque rire, chaque conversation, chaque moment partagé avec toi a été veritablement spécial.<br>
+        Je suis tellement reconnaissante pour ce lien precieux qui nous unit, et pour tout l'amour que tu apporte toujours dans ma vie.<br>
+        Pour ton anniversaire, je te souhaite tout le bonheur du monde, tout l'amour et tout le succes qui existent.</p>
+        <p>Tu merites toute la joie de l'univers - continue de briller et de diffuser ta belle energie partout ou tu vas!</p>
+        <p style="font-size: 1.4rem; color: #ff9a8b; margin-top: 2rem;">Je t'aime plus que tout au monde! Joyeux anniversaire mon ange!</p>
+        <a href="#" class="goodbye-btn">A tres bientot mon coeur</a>
+    </section>
+
+    <script>
+        // Generate sparkles
+        const sparklesContainer = document.querySelector('.magic-sparkles');
+        for (let i = 0; i < 50; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = Math.random() * 100 + '%';
+            sparkle.style.top = Math.random() * 100 + '%';
+            sparkle.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+            sparkle.style.animationDelay = Math.random() * 3 + 's';
+            sparklesContainer.appendChild(sparkle);
+        }
+
+        // Custom cursor
+        const cursor = document.querySelector('.custom-cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX - 12 + 'px';
+            cursor.style.top = e.clientY - 12 + 'px';
+        });
+    </script>
+</body>
+</html>
+

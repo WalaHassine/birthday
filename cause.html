@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pourquoi tu es speciale pour moi 💕</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="./cause.css">
+    <style>
+        /* Override some styles to ensure visibility */
+        .reason-card {
+            opacity: 1 !important;
+            display: block !important;
+        }
+        
+        .ending-section {
+            display: block !important;
+            opacity: 1 !important;
+        }
+        
+        .teddy-hug {
+            transform: scale(1) !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    
+    <div class="custom-cursor" id="cursor">
+        <svg viewBox="0 0 24 24">
+            <path fill="#e94560" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+    </div>
+
+    <div class="container">
+        <h1>Joyeux Anniversaire mon Ange</h1>
+        
+        <div id="reasons-container">
+            <!-- Reasons will be inserted here -->
+        </div>
+        
+        <button class="shuffle-button" id="shuffleBtn">Découvrir pourquoi tu es speciale</button>
+        <div class="reason-counter" id="counter"></div>
+
+        <div class="ending-section">
+
+            <div class="ending-text">Tu es la MEILLEURE! Je t'aime fort!</div>
+        </div>
+    </div>
+
+    <script>
+        // Reasons database - Emotional French messages
+        const reasons = [
+            { 
+                text: "Tu as le plus beau sourire du monde, et chaque fois que tu ris, mon cœur s'envole. Ton bonheur est ma plus grande joie!" 
+            },
+            { 
+                text: "Ta gentillesse et ta douceur me touchent profondément. Tu as un cœur en or qui éclaire tout le monde autour de toi." 
+            },
+            { 
+                text: "Malgré les moments difficiles, tu reste forte et courageuse. Ta force m'inspire chaque jour un peu plus." 
+            },
+            { 
+                text: "Tu es unique et irremplaçable. Il n'y a personne comme toi au monde, et c'est ce qui te rend si spéciale." 
+            },
+            { 
+                text: "Chaque conversation avec toi est un moment précieux que je garde précieusement dans mon cœur." 
+            },
+            { 
+                text: "Tu sais comment remonter le moral même dans les pires moments. Tu es mon rayon de soleil!" 
+            },
+            { 
+                text: "Ton âme pure et ton cœur généreux font de toi une personne exceptionnelle. Je suis tellement chanceux de t'avoir à mes côtés." 
+            },
+            { 
+                text: "Je suis tellement reconnaissante de t'avoir dans ma vie. Tu rends chaque jour plus beau simplement en étant toi-même." 
+            },
+            { 
+                text: "Tes yeux magnifiques racontent des histoires pleines de tendresse et de rêve. Je pourrais m'y perdre éternellement!" 
+            },
+            { 
+                text: "Tu mérites tout le bonheur du monde et bien plus encore. Je ferai tout pour te voir sourire chaque jour de ta vie!" 
+            },
+            { 
+                text: "La façon dont tu prends soin de ceux que tu aimes est remarquable. Tu as un cœur immense qui déborde d'amour et de compassion." 
+            },
+            { 
+                text: "Ton rire est la plus belle mélodie que j'ai jamais entendue !" 
+            }
+        ];
+
+        // State management
+        let currentReasonIndex = 0;
+        const reasonsContainer = document.getElementById('reasons-container');
+        const shuffleButton = document.getElementById('shuffleBtn');
+        const reasonCounter = document.getElementById('counter');
+
+        // Debug: Check if elements exist
+        console.log('reasonsContainer:', reasonsContainer);
+        console.log('shuffleButton:', shuffleButton);
+        console.log('reasonCounter:', reasonCounter);
+
+        // Create reason card (without emojis and gifs)
+        function createReasonCard(reason) {
+            const card = document.createElement('div');
+            card.className = 'reason-card';
+            card.style.opacity = '1';
+            card.style.display = 'block';
+            
+            const text = document.createElement('div');
+            text.className = 'reason-text';
+            text.textContent = reason.text;
+            
+            card.appendChild(text);
+            
+            return card;
+        }
+
+        // Display new reason
+        function displayNewReason() {
+            console.log('displayNewReason called, index:', currentReasonIndex);
+            
+            if (currentReasonIndex < reasons.length) {
+                const card = createReasonCard(reasons[currentReasonIndex]);
+                reasonsContainer.appendChild(card);
+                
+                // Animate the card
+                gsap.from(card, {
+                    opacity: 0,
+                    y: 50,
+                    duration: 0.6,
+                    ease: "back.out"
+                });
+
+                // Update counter
+                reasonCounter.textContent = 'Raison ' + (currentReasonIndex + 1) + ' sur ' + reasons.length + ' - Tu es unique!';
+                
+                currentReasonIndex++;
+
+                // Check if we should transform the button
+                if (currentReasonIndex === reasons.length) {
+                    gsap.to(shuffleButton, {
+                        scale: 1.1,
+                        duration: 0.5,
+                        ease: "elastic.out",
+                        onComplete: () => {
+                            shuffleButton.textContent = 'Voir nos souvenirs ensemble';
+                            shuffleButton.classList.add('story-mode');
+                            shuffleButton.onclick = function() {
+                                gsap.to('body', {
+                                    opacity: 0,
+                                    duration: 1,
+                                    onComplete: () => {
+                                        window.location.href = 'last.html';
+                                    }
+                                });
+                            };
+                        }
+                    });
+                }
+            }
+        }
+
+        // Initialize button click
+        shuffleButton.addEventListener('click', function() {
+            gsap.to(shuffleButton, {
+                scale: 0.9,
+                duration: 0.1,
+                yoyo: true,
+                repeat: 1,
+                onComplete: () => {
+                    displayNewReason();
+                }
+            });
+        });
+
+        // Custom cursor
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            if (cursor) {
+                cursor.style.left = (e.clientX - 15) + 'px';
+                cursor.style.top = (e.clientY - 15) + 'px';
+            }
+        });
+
+        // Generate stars
+        const starsContainer = document.getElementById('stars');
+        if (starsContainer) {
+            for (let i = 0; i < 80; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Initial animation for title
+        gsap.from('h1', {
+            opacity: 0,
+            y: -50,
+            duration: 1,
+            ease: "elastic.out"
+        });
+
+        // Show ending section
+        gsap.from('.ending-section', {
+            opacity: 0,
+            y: 50,
+            duration: 1,
+            delay: 0.5,
+            ease: "power2.out"
+        });
+    </script>
+</body>
+</html>
+
